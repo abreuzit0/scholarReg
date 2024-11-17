@@ -23,7 +23,7 @@ export const listarOfertas = async (req, res) => {
 
 export const listarAlunos = async (req, res) => {
     try {
-        const lista = await dbConn('usuarios').where('tipo', 'aluno');
+        const lista = await dbConn('usuarios').where('tipo', 'aluno').select('nome', 'email', 'tipo');
         console.log(lista);
         res.json(lista)
     } catch (error) {
