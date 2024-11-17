@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 import express from "express";
-=======
->>>>>>> f7d46aae60d116b215a98c4e0f5f54210d096cb8
 import dotenv from "dotenv";
 import institucionalRoutes from "./routes/institucionalRoutes.js";
 import estudanteRoutes from "./routes/estudanteRoutes.js";
@@ -29,8 +26,4 @@ app.use("/api/auth", authRoutes);
 
 app.listen(3000, () => {
   console.log("Aplicação rodando na porta 3000.");
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> f7d46aae60d116b215a98c4e0f5f54210d096cb8
