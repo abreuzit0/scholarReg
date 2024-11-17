@@ -1,26 +1,40 @@
-import knex from 'knex';
-import knexfile from '../db/knexfile.js';
+import knex from "knex";
+import knexfile from "../db/knexfile.js";
 
 const dbConn = knex(knexfile);
 
 export const matricular = async (req, res) => {
-    const { idAluno, idTurma } = req.body;
+  const { idTurma } = req.body;
 
-    console.log(idAluno, idTurma);
-    const mat = await dbConn('aluno_turmas').insert({
-        idAluno: idAluno, 
-        idTurma: idTurma
+  console.log("Matrícula solicitada para a turma:", idTurma);
+
+  try {
+    const idAluno = "1";
+    await dbConn("aluno_turmas").insert({
+      idAluno: idAluno,
+      idTurma: idTurma,
     });
-    res.json({message: 'Aluno matriculado com sucesso!'})
+
+    await dbConn("turmas").where("id", idTurma).update({ isEnrolled: true });
+
+    res.json({ message: "Aluno matriculado com sucesso!" });
+  } catch (error) {
+    console.error("Erro ao matricular o aluno:", error);
+    res
+      .status(500)
+      .json({ message: "Erro ao matricular. Tente novamente mais tarde." });
+  }
 };
 
 export const listarOfertas = async (req, res) => {
-    const listaTurmas = await dbConn('turmas');
-    console.log(listaTurmas);
-    res.json(listaTurmas);
+  const listaTurmas = await dbConn("turmas");
+  console.log("aqui", listaTurmas);
+  res.json(listaTurmas);
 };
 
 export const contagemAlunos = async (req, res) => {
-    const contagem = await dbConn('aluno_turmas').count('idAluno').groupBy('idTurma');
-    res.json(contagem);
-}
+  const contagem = await dbConn("aluno_turmas")
+    .count("idAluno")
+    .groupBy("idTurma");
+  res.json(contagem);
+};
